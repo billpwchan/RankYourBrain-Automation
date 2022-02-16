@@ -47,6 +47,7 @@ def getFunctionReverse(problem):
     elif '/' in problem:
         return multiply
 
+
 driver = webdriver.Chrome(executable_path="./chromedriver.exe")
 driver.get("https://rankyourbrain.com/mental-math/mental-math-test-normal/play")
 # time.sleep(25)
@@ -75,7 +76,6 @@ while(timer != "00:00:01"):
         problem = re.split('\+|-|\/|\*|=', afterAnswer)[1:]
         ans = str(getFunctionReverse(original_problem)
                   (int(problem[-1]), int(problem[0])))
-
     # Cases with 8 / ___ = 2
     else:
         problem = [re.split('\+|-|\/|\*|=', beforeAnswer)
