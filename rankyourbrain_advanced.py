@@ -11,19 +11,19 @@ import re
 
 
 def add(a, b):
-    return a + b
+    return round(a + b, 1)
 
 
 def subtract(a, b):
-    return a - b
+    return round(a - b, 1)
 
 
 def multiply(a, b):
-    return a * b
+    return round(a * b, 1)
 
 
 def divide(a, b):
-    return int((1.0*a/b) + 0.5)
+    return round((1.0*a/b) + 0.5, 1)
 
 
 def getFunction(problem):
@@ -49,7 +49,7 @@ def getFunctionReverse(problem):
 
 
 driver = webdriver.Chrome(executable_path="./chromedriver.exe")
-driver.get("https://rankyourbrain.com/mental-math/mental-math-test-normal/play")
+driver.get("https://rankyourbrain.com/mental-math/mental-math-test-advanced/play")
 
 # time.sleep(25)
 try:
@@ -71,24 +71,24 @@ while(timer != "00:00:01"):
     if afterAnswer == '':
         problem = re.split('\+|-|\/|\*|=', beforeAnswer)[:-1]
         ans = str(getFunction(original_problem)(
-            int(problem[0]), int(problem[-1])))
+            float(problem[0]), float(problem[-1])))
     # Cases with ___ + 2 = 4
     elif beforeAnswer == '':
         problem = re.split('\+|-|\/|\*|=', afterAnswer)[1:]
         ans = str(getFunctionReverse(original_problem)
-                  (int(problem[-1]), int(problem[0])))
+                  (float(problem[-1]), float(problem[0])))
     # Cases with 8 / ___ = 2
     else:
         problem = [re.split('\+|-|\/|\*|=', beforeAnswer)
                    [0], re.split('\+|-|\/|\*|=', afterAnswer)[-1]]
         if '+' in original_problem:
-            ans = str(subtract(int(problem[-1]), int(problem[0])))
+            ans = str(subtract(float(problem[-1]), float(problem[0])))
         elif '-' in original_problem:
-            ans = str(subtract(int(problem[0]), int(problem[-1])))
+            ans = str(subtract(float(problem[0]), float(problem[-1])))
         elif '*' in original_problem:
-            ans = str(divide(int(problem[-1]), int(problem[0])))
+            ans = str(divide(float(problem[-1]), float(problem[0])))
         elif '/' in original_problem:
-            ans = str(divide(int(problem[0]), int(problem[-1])))
+            ans = str(divide(float(problem[0]), float(problem[-1])))
 
     box = driver.find_element_by_id('answer')
     # print(f'A: {problem[0]}, B: {problem[-1]}, Answer: {ans}')
